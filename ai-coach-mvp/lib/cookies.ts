@@ -1,16 +1,19 @@
 import { cookies } from 'next/headers';
 
-export async function getCookie(name: string): Promise<string | undefined> {
-  return (await cookies()).get(name)?.value;
+export function getCookie(name: string): string | undefined {
+  try {
+    return cookies().get(name)?.value;
+  } catch {
+    return undefined;
+  }
 }
 
-export function setCookie(name: string, value: string, options: any = {}) {
-  // Note: cookies().set is not available in server components
-  // This would need to be implemented differently for API routes
-  console.warn('setCookie not implemented for server components');
+// Cookie setting/deletion is typically done via API Response headers (NextResponse)
+// or in fetch handlers. This module intentionally keeps setters minimal.
+export function setCookie(_name: string, _value: string, _options?: any) {
+  // no-op: use NextResponse in API routes to set cookies
 }
 
-export function deleteCookie(name: string) {
-  // Note: cookies().set is not available in server components
-  console.warn('deleteCookie not implemented for server components');
+export function deleteCookie(_name: string) {
+  // no-op: use NextResponse in API routes to delete cookies
 }

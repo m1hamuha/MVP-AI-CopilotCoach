@@ -1,4 +1,4 @@
-import { streamText, convertToCoreMessages, type UIMessage } from 'ai';
+import { streamText, type UIMessage } from 'ai';
 import { getModel } from '@/lib/llm';
 import { buildSystemPrompt } from '@/lib/prompt';
 import { requireUser } from '@/lib/auth';
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json() as {
     messages: UIMessage[];
     goal?: string;
-    context?: string; // you can paste diff/code/description here
+    context?: string;
   };
 
   const system = buildSystemPrompt({
@@ -20,14 +20,24 @@ export async function POST(req: NextRequest) {
     context: body.context ?? ''
   });
 
+  // Build messages for the model. We avoid heavy conversions and pass through UI messages when possible.
+  const messagesForModel: any[] = [
+    { role: 'system', content: system },
+    ...(body.messages ?? [])
+  ];
+
   const result = streamText({
     model: getModel(),
-    messages: [
-      { role: 'system', content: system },
-      ...(await convertToCoreMessages(body.messages))
-    ],
+    messages: messagesForModel,
     temperature: 0.3
   });
 
-  return result.toDataStreamResponse();
+  if (typeof (result as any).toUIMessageStreamResponse === 'function') {
+    return (result as any).toUIMessageStreamResponse();
+  }
+  if (typeof (result as any).toDataStreamResponse === 'function') {
+    return (result as any).toDataStreamResponse();
+  }
+
+  return new Response('Streaming surface not supported', { status: 501 });
 }
