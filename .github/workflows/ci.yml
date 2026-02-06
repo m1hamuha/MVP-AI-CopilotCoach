@@ -7,16 +7,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: 'npm' }
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
+        with: { node-version: 20 }
+      - run: cd ai-coach-mvp && npm ci
+      - run: cd ai-coach-mvp && npm run lint
+      - run: cd ai-coach-mvp && npm run typecheck
 
   unit-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: 'npm' }
-      - run: npm ci
-      - run: npm run test:unit
+        with: { node-version: 20 }
+      - run: cd ai-coach-mvp && npm ci
+      - run: cd ai-coach-mvp && npm run test:unit
