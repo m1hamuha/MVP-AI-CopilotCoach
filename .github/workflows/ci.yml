@@ -1,15 +1,22 @@
 name: CI
 on: [push, pull_request]
+
 jobs:
-  test:
+  lint-and-typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with: { version: 9 }
       - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: 'pnpm' }
-      - run: cd ai-coach-mvp && pnpm i
-      - run: cd ai-coach-mvp && pnpm lint
-      - run: cd ai-coach-mvp && pnpm typecheck
-      - run: cd ai-coach-mvp && pnpm test:unit
+        with: { node-version: 20, cache: 'npm' }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: 'npm' }
+      - run: npm ci
+      - run: npm run test:unit
