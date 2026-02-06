@@ -9,7 +9,7 @@ jobs:
         with: { version: 9 }
       - uses: actions/setup-node@v4
         with: { node-version: 20, cache: 'pnpm' }
-      - run: pnpm i -C ai-coach-mvp
-      - run: pnpm run lint -C ai-coach-mvp
-      - run: pnpm run typecheck -C ai-coach-mvp
-      - run: pnpm run test:unit -C ai-coach-mvp
+      - run: cd ai-coach-mvp && pnpm i
+      - run: cd ai-coach-mvp && pnpm lint
+      - run: cd ai-coach-mvp && pnpm typecheck
+      - run: cd ai-coach-mvp && pnpm test:unit
