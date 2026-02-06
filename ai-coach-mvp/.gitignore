@@ -23,3 +23,4 @@ pnpm-debug.log*
 # Lockfiles (choose one; npm used here)
 pnpm-lock.yaml
 .cache/
+*.tsbuildinfo
