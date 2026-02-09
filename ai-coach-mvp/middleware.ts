@@ -1,32 +1,18 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { jwtVerify } from 'jose';
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
-  
-  // Skip auth for login and auth routes
-  if (path.startsWith('/login') || path.startsWith('/api/auth')) {
+export default withAuth(
+  function middleware(req: NextRequest) {
     return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => !!token,
+    },
   }
-  
-  const token = request.cookies.get('access_token')?.value;
-  
-  if (!token) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
-  
-  try {
-    await jwtVerify(
-      token,
-      new TextEncoder().encode(process.env.JWT_SECRET!)
-    );
-    return NextResponse.next();
-  } catch (error) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
-}
+);
 
 export const config = {
-  matcher: ['/coach', '/api/chat'],
+  matcher: ["/coach/:path*", "/api/chat/:path*", "/api/feedback/:path*", "/api/analytics/:path*"],
 };
