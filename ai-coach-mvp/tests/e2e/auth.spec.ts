@@ -59,8 +59,8 @@ test.describe('Public Pages', () => {
   test('terms page should be accessible', async ({ page }) => {
     await page.goto('/terms');
     
-    await expect(page.getByText('Terms of Service')).toBeVisible();
-    await expect(page.getByText('Acceptance of Terms')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Terms of Service' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: '1. Acceptance of Terms' })).toBeVisible();
   });
 
   test('privacy page should be accessible', async ({ page }) => {
@@ -68,7 +68,7 @@ test.describe('Public Pages', () => {
     
     // Use more specific selector to avoid matching multiple elements
     await expect(page.getByRole('heading', { name: 'Privacy Policy' })).toBeVisible();
-    await expect(page.getByText('Information We Collect')).toBeVisible();
+    await expect(page.getByRole('heading', { name: '2. Information We Collect' })).toBeVisible();
   });
 });
 

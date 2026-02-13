@@ -43,5 +43,11 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/coach/:path*", "/api/chat/:path*", "/api/feedback/:path*", "/api/analytics/:path*"],
+  matcher: [
+    "/coach/:path*",
+    "/analytics/:path*",
+    "/api/chat/:path*",
+    "/api/feedback/:path*",
+    "/api/analytics/:path*",
+  ],
 };
