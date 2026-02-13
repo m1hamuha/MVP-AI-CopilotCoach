@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useChat } from "@ai-sdk/react";
 import { openRouterModels, type ModelId } from "@/lib/openrouter";
+import { clientLogger } from "@/lib/client-logger";
 
 interface Conversation {
   id: string;
@@ -46,7 +47,7 @@ export default function CoachPage() {
         setConversations(data.conversations);
       }
     } catch (error) {
-      console.error("Failed to load conversations:", error);
+      clientLogger.error("Failed to load conversations", error);
     }
   };
 
@@ -79,7 +80,7 @@ export default function CoachPage() {
         setShowConversations(false);
       }
     } catch (error) {
-      console.error("Failed to load conversation:", error);
+      clientLogger.error("Failed to load conversation", error);
     }
   };
 

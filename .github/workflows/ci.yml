@@ -2,8 +2,19 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+  lint-and-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: cd ai-coach-mvp && npm ci
+      - run: cd ai-coach-mvp && npm run lint
+      - run: cd ai-coach-mvp && npm audit --audit-level=moderate || true
+
   typecheck-and-tests:
     runs-on: ubuntu-latest
+    needs: lint-and-security
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -11,3 +22,21 @@ jobs:
       - run: cd ai-coach-mvp && npm ci
       - run: cd ai-coach-mvp && npm run typecheck
       - run: cd ai-coach-mvp && npm run test:unit
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: typecheck-and-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: cd ai-coach-mvp && npm ci
+      - run: cd ai-coach-mvp && npx playwright install chromium
+      - run: cd ai-coach-mvp && npm run test:e2e
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/aicoach_test
+          AUTH_SECRET: test-secret-key-32-chars-minimum
+          NEXTAUTH_SECRET: test-secret-key-32-chars-minimum
+          GITHUB_CLIENT_ID: test-client-id
+          GITHUB_CLIENT_SECRET: test-client-secret
+          OPENROUTER_API_KEY: test-api-key

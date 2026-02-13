@@ -2,7 +2,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/logger';
-import { createErrorResponse } from '@/lib/errors';
+import { createErrorResponse, AppError, ERROR_CODES } from '@/lib/errors';
 import { z } from 'zod';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -16,11 +16,9 @@ export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
-      return createErrorResponse({
-        code: 'UNAUTHORIZED',
-        message: 'You must be logged in to submit feedback',
-        statusCode: 401,
-      });
+      return createErrorResponse(
+        new AppError('You must be logged in to submit feedback', ERROR_CODES.UNAUTHORIZED, 401)
+      );
     }
 
     const body = await req.json();
@@ -31,11 +29,9 @@ export async function POST(req: NextRequest) {
     });
 
     if (!message) {
-      return createErrorResponse({
-        code: 'NOT_FOUND',
-        message: 'Message not found',
-        statusCode: 404,
-      });
+      return createErrorResponse(
+        new AppError('Message not found', ERROR_CODES.NOT_FOUND, 404)
+      );
     }
 
     const feedback = await prisma.feedback.create({
@@ -56,11 +52,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, feedback });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return createErrorResponse({
-        code: 'VALIDATION_ERROR',
-        message: error.errors[0].message,
-        statusCode: 400,
-      });
+      return createErrorResponse(
+        new AppError(error.errors[0].message, ERROR_CODES.VALIDATION_ERROR, 400)
+      );
     }
     logger.error('Feedback error', { error }, error as Error);
     return createErrorResponse(error);
@@ -71,11 +65,9 @@ export async function GET(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
-      return createErrorResponse({
-        code: 'UNAUTHORIZED',
-        message: 'You must be logged in',
-        statusCode: 401,
-      });
+      return createErrorResponse(
+        new AppError('You must be logged in', ERROR_CODES.UNAUTHORIZED, 401)
+      );
     }
 
     const feedback = await prisma.feedback.findMany({

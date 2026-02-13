@@ -2,7 +2,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/logger';
-import { createErrorResponse } from '@/lib/errors';
+import { createErrorResponse, AppError, ERROR_CODES } from '@/lib/errors';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
@@ -12,25 +12,21 @@ export async function GET(
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
-      return createErrorResponse({
-        code: 'UNAUTHORIZED',
-        message: 'You must be logged in',
-        statusCode: 401,
-      });
+      return createErrorResponse(
+        new AppError('You must be logged in', ERROR_CODES.UNAUTHORIZED, 401)
+      );
     }
 
     const { id } = await params;
 
     const conversation = await prisma.conversation.findFirst({
-      where: { id, userId: session.user.id },
+      where: { id, userId: session.user.id, deletedAt: null },
     });
 
     if (!conversation) {
-      return createErrorResponse({
-        code: 'NOT_FOUND',
-        message: 'Conversation not found',
-        statusCode: 404,
-      });
+      return createErrorResponse(
+        new AppError('Conversation not found', ERROR_CODES.NOT_FOUND, 404)
+      );
     }
 
     const messages = await prisma.message.findMany({

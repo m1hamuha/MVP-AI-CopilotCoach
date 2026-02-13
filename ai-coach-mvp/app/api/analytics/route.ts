@@ -2,7 +2,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/logger';
-import { createErrorResponse } from '@/lib/errors';
+import { createErrorResponse, AppError, ERROR_CODES } from '@/lib/errors';
 import { openRouterModels, type ModelId } from '@/lib/openrouter';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -10,11 +10,9 @@ export async function GET(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
-      return createErrorResponse({
-        code: 'UNAUTHORIZED',
-        message: 'You must be logged in',
-        statusCode: 401,
-      });
+      return createErrorResponse(
+        new AppError('You must be logged in', ERROR_CODES.UNAUTHORIZED, 401)
+      );
     }
 
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
