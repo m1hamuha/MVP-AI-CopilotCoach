@@ -11,7 +11,7 @@ jobs:
       - run: cd ai-coach-mvp && npm ci
       - run: cd ai-coach-mvp && npm audit --audit-level=moderate || true
 
-  typecheck-and-tests:
+  lint-and-typecheck:
     runs-on: ubuntu-latest
     needs: security-audit
     steps:
@@ -19,6 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: cd ai-coach-mvp && npm ci
+      - run: cd ai-coach-mvp && npm run lint
       - run: cd ai-coach-mvp && npm run typecheck
       - run: cd ai-coach-mvp && npm run test:unit
 

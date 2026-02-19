@@ -47,7 +47,7 @@ export default function AnalyticsPage() {
       } else {
         setData(result);
       }
-    } catch (err) {
+    } catch {
       setError("Failed to load analytics");
     } finally {
       setLoading(false);

@@ -6,7 +6,7 @@ import { createErrorResponse, AppError, ERROR_CODES } from '@/lib/errors';
 import { openRouterModels, type ModelId } from '@/lib/openrouter';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
       }),
     ]);
 
-    const modelBreakdown = messagesByModel.map((item: any) => ({
+    const modelBreakdown = messagesByModel.map((item) => ({
       model: item.model as ModelId,
       modelName: openRouterModels[item.model as ModelId]?.name || item.model,
       count: item._count,
@@ -67,8 +67,8 @@ export async function GET(req: NextRequest) {
       cost: item._sum.cost ?? 0,
     }));
 
-    const totalCost = modelBreakdown.reduce((sum: number, m: any) => sum + m.cost, 0);
-    const totalTokens = modelBreakdown.reduce((sum: number, m: any) => sum + m.tokens, 0);
+    const totalCost = modelBreakdown.reduce((sum: number, m) => sum + m.cost, 0);
+    const totalTokens = modelBreakdown.reduce((sum: number, m) => sum + m.tokens, 0);
 
     return NextResponse.json({
       summary: {
@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
         totalFeedbackCount: feedbackStats._count,
       },
       modelBreakdown,
-      recentActivity: recentActivity.map((msg: any) => ({
+      recentActivity: recentActivity.map((msg) => ({
         id: msg.id,
         role: msg.role,
         preview: msg.content.substring(0, 100),

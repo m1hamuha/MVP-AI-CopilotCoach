@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
 import { openRouterModels, type ModelId } from "@/lib/openrouter";
 import { clientLogger } from "@/lib/client-logger";
@@ -66,7 +66,7 @@ export default function CoachPage() {
       const res = await fetch(`/api/conversations/${id}/messages`);
       const data = await res.json();
       if (data.messages) {
-        const formattedMessages = data.messages.map((m: any) => ({
+        const formattedMessages = data.messages.map((m: { id: string; role: string; content: string }) => ({
           id: m.id,
           role: m.role as "user" | "assistant",
           content: m.content,

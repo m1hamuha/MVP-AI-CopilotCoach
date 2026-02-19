@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
       context: body.context ?? ''
     });
 
-    const messagesForModel: any[] = [
+    const messagesForModel: Array<{ role: string; content: string }> = [
       { role: 'system', content: system },
       ...(body.messages ?? [])
     ];
@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
                       };
                       controller.enqueue(encoder.encode(`data: ${JSON.stringify(forwardData)}\n\n`));
                     }
-                  } catch (e) {
+                  } catch {
                     // Skip invalid JSON
                   }
                 }

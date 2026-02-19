@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "lint": "eslint . --ext .ts,.tsx --max-warnings 0",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
@@ -23,12 +24,16 @@
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^16.1.6",
     "@playwright/test": "^1.50.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.56.0",
+    "@typescript-eslint/parser": "^8.56.0",
     "jsdom": "^27.4.0",
     "prisma": "^6.0.0",
     "typescript": "^5.7.0",
+    "typescript-eslint": "^8.56.0",
     "vitest": "^2.0.0"
   }
 }
