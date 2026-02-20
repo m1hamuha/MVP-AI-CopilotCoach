@@ -3,6 +3,7 @@ import { authOptions } from '@/lib/auth-options';
 import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/logger';
 import { createErrorResponse, AppError, ERROR_CODES } from '@/lib/errors';
+import { rateLimitWithConfig, RATE_LIMITS } from '@/lib/security';
 import { openRouterModels, type ModelId } from '@/lib/openrouter';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -14,6 +15,8 @@ export async function GET(_req: NextRequest) {
         new AppError('You must be logged in', ERROR_CODES.UNAUTHORIZED, 401)
       );
     }
+
+    await rateLimitWithConfig(session.user.id, RATE_LIMITS.analytics);
 
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 

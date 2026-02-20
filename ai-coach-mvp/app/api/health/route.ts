@@ -1,7 +1,21 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { rateLimitByIp, RATE_LIMITS } from '@/lib/security';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const ip = req.headers.get('x-forwarded-for') || 
+             req.headers.get('x-real-ip') || 
+             'unknown';
+  
+  try {
+    await rateLimitByIp(ip.toString(), RATE_LIMITS.health.endpoint);
+  } catch {
+    return NextResponse.json(
+      { error: 'Too many requests' },
+      { status: 429 }
+    );
+  }
+
   const healthCheck = {
     status: 'healthy',
     timestamp: new Date().toISOString(),

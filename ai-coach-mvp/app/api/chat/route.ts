@@ -1,6 +1,7 @@
 import { type UIMessage } from 'ai';
 import { openRouterModels, type ModelId, getOpenRouterHeaders } from '@/lib/openrouter';
 import { buildSystemPrompt } from '@/lib/prompt';
+import { sanitizeForPrompt } from '@/lib/sanitize';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-options';
 import { rateLimitOrThrow } from '@/lib/security';
@@ -38,8 +39,8 @@ export async function POST(req: NextRequest) {
     const modelInfo = openRouterModels[modelId];
 
     const system = buildSystemPrompt({
-      userGoal: body.goal ?? 'Help improve the solution',
-      context: body.context ?? ''
+      userGoal: sanitizeForPrompt(body.goal ?? 'Help improve the solution'),
+      context: sanitizeForPrompt(body.context ?? '')
     });
 
     const messagesForModel: Array<{ role: string; content: string }> = [

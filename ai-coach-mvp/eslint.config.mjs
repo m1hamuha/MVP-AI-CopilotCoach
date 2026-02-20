@@ -16,6 +16,12 @@ export default [
     },
   },
   {
+    files: ['lib/logger.ts', 'lib/errors.ts', 'lib/client-logger.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+  {
     ignores: [
       '.next/**/*',
       'node_modules/**/*',

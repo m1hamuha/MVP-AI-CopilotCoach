@@ -58,3 +58,51 @@ export async function rateLimitByIp(ip: string, endpoint: string) {
     );
   }
 }
+
+export interface RateLimitConfig {
+  windowMs: number;
+  maxRequests: number;
+  endpoint: string;
+}
+
+export async function rateLimitWithConfig(
+  userId: string,
+  config: RateLimitConfig
+) {
+  const now = new Date();
+  const windowStart = new Date(now.getTime() - config.windowMs);
+
+  const requestCount = await prisma.requestLog.count({
+    where: {
+      userId,
+      endpoint: config.endpoint,
+      createdAt: {
+        gte: windowStart
+      }
+    }
+  });
+
+  if (requestCount >= config.maxRequests) {
+    throw new AppError(
+      'Rate limit exceeded. Please try again later.',
+      ERROR_CODES.RATE_LIMITED,
+      429
+    );
+  }
+
+  await prisma.requestLog.create({
+    data: {
+      userId,
+      endpoint: config.endpoint,
+      createdAt: now
+    }
+  });
+}
+
+export const RATE_LIMITS = {
+  chat: { windowMs: 15 * 60 * 1000, maxRequests: 100, endpoint: 'chat' },
+  conversations: { windowMs: 60 * 1000, maxRequests: 30, endpoint: 'conversations' },
+  feedback: { windowMs: 60 * 1000, maxRequests: 20, endpoint: 'feedback' },
+  analytics: { windowMs: 60 * 1000, maxRequests: 10, endpoint: 'analytics' },
+  health: { windowMs: 60 * 1000, maxRequests: 60, endpoint: 'health' },
+} as const;

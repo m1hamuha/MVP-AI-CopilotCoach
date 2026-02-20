@@ -49,5 +49,6 @@ export const config = {
     "/api/chat/:path*",
     "/api/feedback/:path*",
     "/api/analytics/:path*",
+    "/api/conversations/:path*",
   ],
 };

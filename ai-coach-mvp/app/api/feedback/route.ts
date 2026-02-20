@@ -3,6 +3,7 @@ import { authOptions } from '@/lib/auth-options';
 import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/logger';
 import { createErrorResponse, AppError, ERROR_CODES } from '@/lib/errors';
+import { rateLimitWithConfig, RATE_LIMITS } from '@/lib/security';
 import { z } from 'zod';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -20,6 +21,8 @@ export async function POST(req: NextRequest) {
         new AppError('You must be logged in to submit feedback', ERROR_CODES.UNAUTHORIZED, 401)
       );
     }
+
+    await rateLimitWithConfig(session.user.id, RATE_LIMITS.feedback);
 
     const body = await req.json();
     const validated = feedbackSchema.parse(body);
@@ -69,6 +72,8 @@ export async function GET(_req: NextRequest) {
         new AppError('You must be logged in', ERROR_CODES.UNAUTHORIZED, 401)
       );
     }
+
+    await rateLimitWithConfig(session.user.id, RATE_LIMITS.feedback);
 
     const feedback = await prisma.feedback.findMany({
       where: { userId: session.user.id },
