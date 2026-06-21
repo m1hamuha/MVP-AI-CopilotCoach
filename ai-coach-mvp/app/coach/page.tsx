@@ -206,6 +206,7 @@ export default function CoachPage() {
                     e.stopPropagation();
                     deleteConversation(conv.id);
                   }}
+                  aria-label={`Delete conversation: ${conv.title}`}
                   style={{
                     background: "none",
                     border: "none",
@@ -239,6 +240,8 @@ export default function CoachPage() {
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <button
               onClick={() => setShowConversations(!showConversations)}
+              aria-label={showConversations ? "Hide conversations sidebar" : "Show conversations sidebar"}
+              aria-expanded={showConversations}
               style={{
                 background: "none",
                 border: "none",
