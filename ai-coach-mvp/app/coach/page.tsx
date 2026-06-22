@@ -206,6 +206,8 @@ export default function CoachPage() {
                     e.stopPropagation();
                     deleteConversation(conv.id);
                   }}
+                  aria-label={`Delete conversation: ${conv.title}`}
+                  title="Delete conversation"
                   style={{
                     background: "none",
                     border: "none",
@@ -239,6 +241,9 @@ export default function CoachPage() {
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <button
               onClick={() => setShowConversations(!showConversations)}
+              aria-label={showConversations ? "Hide conversations sidebar" : "Show conversations sidebar"}
+              aria-expanded={showConversations}
+              title="Toggle conversations"
               style={{
                 background: "none",
                 border: "none",
@@ -443,6 +448,7 @@ export default function CoachPage() {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                aria-label="Message the AI coach"
                 placeholder="Ask what to improve, or describe your coding challenge..."
                 style={{
                   flex: 1,
