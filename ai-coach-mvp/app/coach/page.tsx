@@ -31,6 +31,8 @@ export default function CoachPage() {
     handleSubmit,
     isLoading,
     setMessages,
+    error,
+    reload,
   } = useChat({
     body: { goal, context, model },
   });
@@ -426,6 +428,43 @@ export default function CoachPage() {
                   }}
                 >
                   Thinking...
+                </div>
+              )}
+
+              {error && (
+                <div
+                  role="alert"
+                  style={{
+                    padding: "16px 20px",
+                    backgroundColor: "#21262d",
+                    border: "1px solid #f85149",
+                    borderRadius: 8,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: 16,
+                  }}
+                >
+                  <div style={{ color: "#f85149", fontSize: 14, lineHeight: 1.5 }}>
+                    Something went wrong while contacting the AI coach. Please try
+                    again.
+                  </div>
+                  <button
+                    onClick={() => reload()}
+                    style={{
+                      padding: "8px 16px",
+                      backgroundColor: "#238636",
+                      color: "#ffffff",
+                      border: "none",
+                      borderRadius: 6,
+                      fontWeight: 600,
+                      fontSize: 13,
+                      cursor: "pointer",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Retry
+                  </button>
                 </div>
               )}
             </div>
