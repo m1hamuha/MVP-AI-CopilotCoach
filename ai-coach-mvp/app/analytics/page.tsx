@@ -39,6 +39,8 @@ export default function AnalyticsPage() {
   }, []);
 
   const loadAnalytics = async () => {
+    setLoading(true);
+    setError(null);
     try {
       const res = await fetch("/api/analytics");
       const result = await res.json();
@@ -97,13 +99,43 @@ export default function AnalyticsPage() {
         style={{
           minHeight: "100vh",
           backgroundColor: "#0d1117",
-          color: "#f85149",
+          color: "#c9d1d9",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          padding: 24,
         }}
       >
-        Error: {error}
+        <div
+          role="alert"
+          style={{
+            maxWidth: 420,
+            backgroundColor: "#161b22",
+            border: "1px solid #f85149",
+            borderRadius: 8,
+            padding: 24,
+            textAlign: "center",
+          }}
+        >
+          <div style={{ color: "#f85149", fontSize: 14, lineHeight: 1.5, marginBottom: 16 }}>
+            Couldn&apos;t load your analytics. {error}
+          </div>
+          <button
+            onClick={loadAnalytics}
+            style={{
+              padding: "8px 16px",
+              backgroundColor: "#238636",
+              color: "#ffffff",
+              border: "none",
+              borderRadius: 6,
+              fontWeight: 600,
+              fontSize: 13,
+              cursor: "pointer",
+            }}
+          >
+            Try again
+          </button>
+        </div>
       </div>
     );
   }
