@@ -324,6 +324,7 @@ export default function CoachPage() {
               <div style={{ marginBottom: 24 }}>
                 <div style={{ marginBottom: 16 }}>
                   <label
+                    htmlFor="coaching-goal"
                     style={{
                       display: "block",
                       fontSize: 14,
@@ -335,6 +336,7 @@ export default function CoachPage() {
                     Coaching Goal
                   </label>
                   <input
+                    id="coaching-goal"
                     value={goal}
                     onChange={(e) => setGoal(e.target.value)}
                     placeholder="e.g., Help me improve my React code, Review my algorithm solution..."
@@ -353,6 +355,7 @@ export default function CoachPage() {
 
                 <div>
                   <label
+                    htmlFor="coaching-context"
                     style={{
                       display: "block",
                       fontSize: 14,
@@ -364,6 +367,7 @@ export default function CoachPage() {
                     Context (code, diff, or description)
                   </label>
                   <textarea
+                    id="coaching-context"
                     value={context}
                     onChange={(e) => setContext(e.target.value)}
                     placeholder="Paste your code, diff, or describe what you're working on..."
