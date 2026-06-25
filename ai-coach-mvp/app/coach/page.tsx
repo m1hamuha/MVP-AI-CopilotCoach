@@ -281,6 +281,8 @@ export default function CoachPage() {
             <select
               value={model}
               onChange={(e) => setModel(e.target.value as ModelId)}
+              aria-label="Select AI model"
+              title="Select AI model"
               style={{
                 padding: "8px 12px",
                 backgroundColor: "#21262d",
