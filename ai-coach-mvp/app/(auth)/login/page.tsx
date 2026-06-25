@@ -75,7 +75,7 @@ export default function LoginPage() {
         <p style={{
           fontSize: "12px",
           marginTop: "24px",
-          color: "#6e7681",
+          color: "#787f89",
         }}>
           By signing in, you agree to our{" "}
           <a href="/terms" style={{ color: "#58a6ff", textDecoration: "none" }}>
