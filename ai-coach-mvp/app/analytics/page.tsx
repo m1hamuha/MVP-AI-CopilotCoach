@@ -79,6 +79,8 @@ export default function AnalyticsPage() {
   if (loading) {
     return (
       <div
+        role="status"
+        aria-live="polite"
         style={{
           minHeight: "100vh",
           backgroundColor: "#0d1117",
