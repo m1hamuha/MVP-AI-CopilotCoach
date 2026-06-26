@@ -16,7 +16,7 @@ export default function TermsPage() {
         lineHeight: 1.6,
       }}
     >
-      <div
+      <main
         style={{
           maxWidth: 800,
           margin: "0 auto",
@@ -182,7 +182,7 @@ export default function TermsPage() {
             ← Back to Home
           </a>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
