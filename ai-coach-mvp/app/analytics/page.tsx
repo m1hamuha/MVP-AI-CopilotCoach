@@ -243,11 +243,11 @@ export default function AnalyticsPage() {
                 ? data.summary.averageRating.toFixed(1)
                 : "—"}
             </div>
-            {data?.summary.totalFeedbackCount && (
+            {data?.summary.totalFeedbackCount ? (
               <div style={{ fontSize: 12, color: "#6e7681", marginTop: 4 }}>
                 {formatNumber(data.summary.totalFeedbackCount)} ratings
               </div>
-            )}
+            ) : null}
           </div>
         </div>
 
