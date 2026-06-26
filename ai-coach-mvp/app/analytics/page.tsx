@@ -169,7 +169,7 @@ export default function AnalyticsPage() {
         </div>
       </header>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
+      <main style={{ maxWidth: 1200, margin: "0 auto", padding: 24 }}>
         {/* Summary Cards */}
         <div
           style={{
@@ -451,7 +451,7 @@ export default function AnalyticsPage() {
             )}
           </div>
         </section>
-      </div>
+      </main>
     </div>
   );
 }
