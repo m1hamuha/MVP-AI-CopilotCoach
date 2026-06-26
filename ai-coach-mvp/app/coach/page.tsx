@@ -430,6 +430,8 @@ export default function CoachPage() {
 
               {isLoading && (
                 <div
+                  role="status"
+                  aria-live="polite"
                   style={{
                     padding: "16px 20px",
                     backgroundColor: "#161b22",
