@@ -1,3 +1,11 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description:
+    'The terms and conditions governing your use of AI CopilotCoach, the AI-powered developer coaching service.',
+};
+
 export default function TermsPage() {
   return (
     <div

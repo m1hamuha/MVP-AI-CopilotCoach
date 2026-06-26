@@ -1,3 +1,11 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description:
+    'How AI CopilotCoach collects, uses, and protects your data when you use our developer coaching service.',
+};
+
 export default function PrivacyPage() {
   return (
     <div
