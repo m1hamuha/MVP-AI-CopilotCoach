@@ -146,6 +146,10 @@ export default function CoachPage() {
           borderRight: "1px solid #30363d",
           transition: "width 0.2s",
           overflow: "hidden",
+          // When collapsed, hide from tab order + screen readers so the
+          // off-screen New Chat / conversation / delete controls aren't
+          // keyboard-focusable or announced (WCAG 2.4.3 / 4.1.2).
+          visibility: showConversations ? "visible" : "hidden",
         }}
       >
         <div style={{ padding: 16 }}>
