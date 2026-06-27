@@ -78,11 +78,11 @@ export default function LoginPage() {
           color: "#787f89",
         }}>
           By signing in, you agree to our{" "}
-          <a href="/terms" style={{ color: "#58a6ff", textDecoration: "none" }}>
+          <a href="/terms" style={{ color: "#58a6ff", textDecoration: "underline" }}>
             Terms of Service
           </a>{" "}
           and{" "}
-          <a href="/privacy" style={{ color: "#58a6ff", textDecoration: "none" }}>
+          <a href="/privacy" style={{ color: "#58a6ff", textDecoration: "underline" }}>
             Privacy Policy
           </a>.
         </p>
