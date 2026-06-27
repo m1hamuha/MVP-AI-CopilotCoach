@@ -20,7 +20,7 @@ export default function LoginPage() {
       backgroundColor: "#0d1117",
       color: "#c9d1d9",
     }}>
-      <div style={{
+      <main style={{
         textAlign: "center",
         padding: "48px",
         maxWidth: "400px",
@@ -86,7 +86,7 @@ export default function LoginPage() {
             Privacy Policy
           </a>.
         </p>
-      </div>
+      </main>
     </div>
   );
 }
