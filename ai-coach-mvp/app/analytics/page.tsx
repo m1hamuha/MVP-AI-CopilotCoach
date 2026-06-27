@@ -314,6 +314,16 @@ export default function AnalyticsPage() {
                 </tr>
               </thead>
               <tbody>
+                {data?.modelBreakdown.length === 0 && (
+                  <tr>
+                    <td
+                      colSpan={4}
+                      style={{ padding: 40, textAlign: "center", color: "#6e7681" }}
+                    >
+                      No usage data yet. Start a conversation in the Coach!
+                    </td>
+                  </tr>
+                )}
                 {data?.modelBreakdown.map((item) => (
                   <tr key={item.model} style={{ borderBottom: "1px solid #21262d" }}>
                     <td style={{ padding: "12px 16px" }}>
