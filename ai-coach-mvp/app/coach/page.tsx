@@ -184,19 +184,30 @@ export default function CoachPage() {
             {conversations.map((conv) => (
               <div
                 key={conv.id}
-                onClick={() => loadConversation(conv.id)}
                 style={{
                   padding: "10px 12px",
                   backgroundColor:
                     currentConversationId === conv.id ? "#21262d" : "transparent",
                   borderRadius: 6,
-                  cursor: "pointer",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                 }}
               >
-                <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => loadConversation(conv.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      loadConversation(conv.id);
+                    }
+                  }}
+                  aria-current={currentConversationId === conv.id ? "true" : undefined}
+                  aria-label={`Open conversation: ${conv.title}`}
+                  style={{ flex: 1, minWidth: 0, cursor: "pointer" }}
+                >
                   <div
                     style={{
                       fontSize: 14,
