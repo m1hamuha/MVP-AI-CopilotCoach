@@ -244,7 +244,7 @@ export default function AnalyticsPage() {
                 : "—"}
             </div>
             {data?.summary.totalFeedbackCount ? (
-              <div style={{ fontSize: 12, color: "#6e7681", marginTop: 4 }}>
+              <div style={{ fontSize: 12, color: "#8b949e", marginTop: 4 }}>
                 {formatNumber(data.summary.totalFeedbackCount)} ratings
               </div>
             ) : null}
@@ -318,7 +318,7 @@ export default function AnalyticsPage() {
                   <tr>
                     <td
                       colSpan={4}
-                      style={{ padding: 40, textAlign: "center", color: "#6e7681" }}
+                      style={{ padding: 40, textAlign: "center", color: "#8b949e" }}
                     >
                       No usage data yet. Start a conversation in the Coach!
                     </td>
@@ -328,7 +328,7 @@ export default function AnalyticsPage() {
                   <tr key={item.model} style={{ borderBottom: "1px solid #21262d" }}>
                     <td style={{ padding: "12px 16px" }}>
                       <div style={{ fontWeight: 500, color: "#ffffff" }}>{item.modelName}</div>
-                      <div style={{ fontSize: 12, color: "#6e7681" }}>{item.model}</div>
+                      <div style={{ fontSize: 12, color: "#8b949e" }}>{item.model}</div>
                     </td>
                     <td
                       style={{
@@ -378,7 +378,7 @@ export default function AnalyticsPage() {
             }}
           >
             {data?.recentActivity.length === 0 ? (
-              <div style={{ padding: 40, textAlign: "center", color: "#6e7681" }}>
+              <div style={{ padding: 40, textAlign: "center", color: "#8b949e" }}>
                 No activity yet. Start a conversation in the Coach!
               </div>
             ) : (
@@ -428,7 +428,7 @@ export default function AnalyticsPage() {
                       >
                         {item.role === "user" ? "You" : "AI Coach"}
                       </span>
-                      <span style={{ fontSize: 12, color: "#6e7681" }}>
+                      <span style={{ fontSize: 12, color: "#8b949e" }}>
                         {formatDate(item.createdAt)}
                       </span>
                     </div>
@@ -445,10 +445,10 @@ export default function AnalyticsPage() {
                       {item.preview}
                     </div>
                     <div style={{ display: "flex", gap: 16 }}>
-                      <span style={{ fontSize: 12, color: "#6e7681" }}>
+                      <span style={{ fontSize: 12, color: "#8b949e" }}>
                         Model: {openRouterModels[item.model as ModelId]?.name || item.model}
                       </span>
-                      <span style={{ fontSize: 12, color: "#6e7681" }}>
+                      <span style={{ fontSize: 12, color: "#8b949e" }}>
                         {formatNumber(item.tokens)} tokens
                       </span>
                       <span style={{ fontSize: 12, color: "#f0883e" }}>
