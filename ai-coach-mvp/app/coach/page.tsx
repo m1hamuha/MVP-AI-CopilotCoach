@@ -177,7 +177,7 @@ export default function CoachPage() {
 
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {conversations.length === 0 && (
-              <div style={{ fontSize: 13, color: "#6e7681", padding: "8px 12px", lineHeight: 1.5 }}>
+              <div style={{ fontSize: 13, color: "#8b949e", padding: "8px 12px", lineHeight: 1.5 }}>
                 No conversations yet. Start a new chat to get coaching.
               </div>
             )}
@@ -219,7 +219,7 @@ export default function CoachPage() {
                   >
                     {conv.title}
                   </div>
-                  <div style={{ fontSize: 11, color: "#6e7681", marginTop: 2 }}>
+                  <div style={{ fontSize: 11, color: "#8b949e", marginTop: 2 }}>
                     {formatDate(conv.updatedAt)}
                   </div>
                 </div>
@@ -233,7 +233,7 @@ export default function CoachPage() {
                   style={{
                     background: "none",
                     border: "none",
-                    color: "#6e7681",
+                    color: "#8b949e",
                     cursor: "pointer",
                     padding: 4,
                     fontSize: 16,
